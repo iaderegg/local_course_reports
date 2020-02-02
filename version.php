@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->component = 'local_iracv';
+$plugin->component = 'local_course_reports';
 $plugin->version = 'alpha1';
 $plugin->version = 2019020100;
 $plugin->requires = 2018050800;
