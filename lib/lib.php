@@ -37,4 +37,39 @@ function get_best_students($courseid, $n_students) {
     return $best_students_array;
 }
 
-print_r(get_best_students(32542, 3));
+/**
+ * get_course_sections
+ * @param int $courseid    Course ID
+ * @return stdClass
+ * 
+ * @author Iader E. Garcia G. <iadergg@gmail.com>
+ */
+
+function get_course_sections($courseid) {
+
+    global $DB;
+
+    $sql_query =   "SELECT
+                        sections.id,
+                        sections.section AS position,
+                        sections.name AS section_name,
+                        COUNT(DISTINCT modules_completion.coursemoduleid) AS modules
+                    FROM
+                        {course_sections} AS sections
+                        INNER JOIN {course_modules} AS modules ON modules.section = sections.id
+                        LEFT JOIN {course_modules_completion} AS modules_completion ON modules_completion.coursemoduleid = modules.id
+                    WHERE
+                        sections.course = $courseid
+                        
+                    GROUP BY
+                        sections.id,
+                        position,
+                        section_name";
+
+    $info_sections_array = $DB->get_records_sql($sql_query);
+
+    return $info_sections_array;
+}
+
+//print_r(get_best_students(32542, 3));
+print_r(get_course_sections(32542));
